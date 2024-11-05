@@ -1,0 +1,21 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "api/index.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/index.js"
+    }
+  ],
+  "env": {
+    "PORT": "8001",
+    "DATABASE": "mongodb+srv://parmarketing:agency%40123%23@data-management.ndwmkgw.mongodb.net/sd-portal?retryWrites=true&w=majority&appName=ParMarketing",
+    "RAZORPAY_KEY_ID": "rzp_live_cRWp492a6sSYQS",
+    "RAZORPAY_SECRET": "vdcnj54E9uk3pmbbcS5MTLNH"
+  }
+}

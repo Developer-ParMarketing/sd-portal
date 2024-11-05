@@ -1,0 +1,163 @@
+@media screen and (max-width: 992px) {
+  .right-part .inner-part {
+    padding: 50px !important;
+  }
+  .details {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .details .address-span {
+    grid-column: 2/4;
+  }
+  .tab {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .expense {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .expense .total-expense {
+    grid-column: 1/4;
+  }
+  .change-type {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .card-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .links li a {
+    height: 80px;
+  }
+  .terms-list li:nth-child(1) {
+    padding-right: 0 !important;
+  }
+  .terms-list li:nth-child(2) {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    border-left: none !important;
+    border-right: none !important;
+  }
+  .terms-list li:nth-child(3) {
+    padding-left: 0 !important;
+  }
+}
+@media screen and (max-width: 768px) {
+  .new-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+}
+@media screen and (max-width: 767px) {
+  .login-page {
+    flex-direction: column;
+    height: auto;
+  }
+  .login-page .left-part,
+  .login-page .right-part {
+    width: 100%;
+  }
+  .login-page .left-part .inner-part {
+    width: 100%;
+    height: auto;
+    gap: 50px;
+  }
+  .login-page .right-part .inner-part {
+    width: 100%;
+    height: auto;
+  }
+  .entries-head {
+    display: none;
+  }
+  .entries-content {
+    grid-template-columns: 1fr;
+  }
+  .details {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .details .address-span {
+    grid-column: 1/3;
+  }
+  .expense {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .expense .total-expense {
+    grid-column: 1/3;
+  }
+  .income {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .card-grid {
+    grid-template-columns: 1fr;
+  }
+  .creditorpayment-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .tab {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media screen and (max-width: 576px) {
+  .left-part .inner-part,
+  .right-part .inner-part {
+    padding: 50px 10px !important;
+  }
+  .links {
+    grid-template-columns: 1fr;
+  }
+  .details .source-span,
+  .details .lead-span,
+  .details .unique-span {
+    grid-column: 1/3;
+  }
+  .creditorpayment-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media screen and (max-width: 500px) {
+  .new-grid {
+    grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
+  }
+  .address-span {
+    grid-column: unset;
+  }
+}
+@media screen and (max-width: 450px) {
+  .details {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .details .source-span,
+  .details .lead-span,
+  .details .unique-span,
+  .details .address-span {
+    grid-column: 1/2;
+  }
+  .expense {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .expense .total-expense {
+    grid-column: 1/2;
+  }
+  .income {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+}
+@media screen and (max-width: 400px) {
+  .creditorpayment-grid {
+    grid-template-columns: 1fr;
+  }
+}
+@media screen and (max-width: 320px) {
+  .tab {
+    grid-template-columns: 1fr;
+  }
+  .tab li a {
+    font-size: 12px;
+    padding: 10px 5px;
+  }
+}
+@media screen and (max-width: 280px) {
+  .logo {
+    width: 100px;
+  }
+} /*# sourceMappingURL=responsive.css.map */
