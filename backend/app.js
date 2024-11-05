@@ -336,6 +336,12 @@ const generateTicketToken = async (req, res) => {
 };
 app.get("/ticket", generateTicketToken);
 
+
+// root request
+app.get("/", (req,res) => {
+  res.send("SD portal (test)")
+})
+
 // start server
 const PORT = process.env.PORT || 1234;
 app.listen(PORT, () => {
