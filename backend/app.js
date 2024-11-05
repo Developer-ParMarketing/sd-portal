@@ -23,8 +23,8 @@ app.use(
     origin: [
       "https://client.singledebt.in",
       "https://enroll.singledebt.in",
-      "https://api-enroll.singledebt.in",
       "http://localhost:3000",
+      "http://localhost:3001",
       "https://msg.mtalkz.com",
     ],
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
