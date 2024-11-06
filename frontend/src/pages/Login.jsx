@@ -455,7 +455,7 @@ const Login = () => {
                   </label>
                 </div>
               )}
-              {message && <p className="text-danger">{message}</p>}
+              {message && <p className="text-success">{message}</p>}
               <button
                 className="button"
                 style={{ justifyContent: loading ? "center" : "space-between" }}
