@@ -412,7 +412,7 @@ const SignUp = () => {
               // This function will be called after the toast is closed
               setTimeout(() => {
                 navigate("/login"); // Redirect to the signup page after 3 seconds (or whatever duration you want)
-              }, 300); // Adjust the timeout duration as needed (3000 ms = 3 seconds)
+              }, 25000); // Adjust the timeout duration as needed (3000 ms = 3 seconds)
             },
           }
         );
@@ -566,7 +566,7 @@ const SignUp = () => {
                 </div>
               </div>
             </div>
-            {message && <p className="text-danger">{message}</p>}
+            {message && <p className="text-success">{message}</p>}
             <button className="button" onClick={createUser} disabled={loading}>
               {loading ? (
                 <div className="spinner-border spinner-border-sm" role="status">
