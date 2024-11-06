@@ -34,11 +34,22 @@ const Login = () => {
     });
   };
 
-  const generateOTP = async () => {
+  // Validate mobile number format
+  const validateMobile = () => {
+    const mobileRegex = /^[0-9]{10}$/; // Basic 10-digit mobile number validation
     if (!inputs.mobile) {
-      setMessage("Enter your mobile number");
-      return;
+      setMessage("Please enter your mobile number.");
+      return false;
     }
+    if (!mobileRegex.test(inputs.mobile)) {
+      setMessage("Please enter a valid 10-digit mobile number.");
+      return false;
+    }
+    return true;
+  };
+
+  const generateOTP = async () => {
+    if (!validateMobile()) return; // Mobile validation before generating OTP
 
     try {
       setLoading(true);
@@ -59,11 +70,11 @@ const Login = () => {
         });
         setMessage("OTP sent successfully");
       } else {
-        setMessage("Failed to send OTP");
+        setMessage("Failed to send OTP. Please try again.");
       }
     } catch (error) {
       console.error(error);
-      setMessage("Error sending OTP");
+      setMessage("Error sending OTP. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -71,14 +82,12 @@ const Login = () => {
 
   const verifyOTP = async () => {
     if (!inputs.otp) {
-      setMessage("Enter OTP");
+      setMessage("Please enter the OTP.");
       return;
     }
 
     try {
       setLoading(true);
-
-      // Verify OTP via mtalkz
       const otpRes = await axios.get(
         `https://msg.mtalkz.com/V2/http-verifysms-api.php?apikey=ZwNEGnllw1d6psrt&sessionid=${inputs.details}&otp=${inputs.otp}`,
         {
@@ -89,14 +98,12 @@ const Login = () => {
       );
 
       if (otpRes.data.Status === "Success") {
-        // Fetch the Zoho CRM API token
         const token = await getToken();
         if (!token) {
-          setMessage("Authentication failed, unable to get token.");
+          setMessage("Authentication failed. Unable to get token.");
           return;
         }
 
-        // Search for the lead by mobile number
         const res = await axios.get(
           `${url}/proxy?url=https://www.zohoapis.in/crm/v2/Leads/search?criteria=(Phone_Number:equals:${inputs.mobile})`,
           {
@@ -107,139 +114,37 @@ const Login = () => {
           }
         );
 
-        const userData = res.data?.data?.[0]; // Ensure we get the first record from Zoho
+        const userData = res.data?.data?.[0];
         if (userData) {
           const recordId = userData.id;
-          // console.log(recordId);
-
-          localStorage.setItem("recordId", recordId); // Store recordId in localStorage
-
-          handleLogin(userData, inputs.mobile); // Log the user in with their data
+          localStorage.setItem("recordId", recordId);
+          handleLogin(userData, inputs.mobile);
         } else {
-          setMessage(
-            "No user data found for the provided mobile number !.Do Sign Up"
-          );
-          toast.error(
-            "No user data found for the provided mobile number! Do Sign Up",
-            {
-              onClose: () => {
-                // This function will be called after the toast is closed
-                setTimeout(() => {
-                  navigate("/signup"); // Redirect to the signup page after 3 seconds (or whatever duration you want)
-                }, 300); // Adjust the timeout duration as needed (3000 ms = 3 seconds)
-              },
-            }
-          );
+          setMessage("No user data found for the provided mobile number. Please sign up.");
+          toast.error("No user data found for the provided mobile number! Please sign up.", {
+            onClose: () => {
+              setTimeout(() => {
+                navigate("/signup");
+              }, 300);
+            },
+          });
         }
       } else {
         setMessage("OTP verification failed. Please try again.");
       }
     } catch (error) {
       console.error("Error verifying OTP or fetching user data:", error);
-      setMessage(
-        "An error occurred while verifying OTP or fetching user data."
-      );
+      setMessage("An error occurred while verifying OTP or fetching user data.");
     } finally {
       setLoading(false);
     }
   };
 
-  // otp  setGenerated(true);
-
-  // const generateOTP = async () => {
-  //   if (!inputs.mobile) {
-  //     setMessage("Enter your mobile number");
-  //     return;
-  //   }
-
-  //   try {
-  //     setLoading(true);
-
-  //     // Default OTP for testing
-  //     const defaultOtp = "1234";
-  //     console.log(`Sending OTP ${defaultOtp} to ${inputs.mobile}`);
-
-  //     // Simulate storing the OTP details for testing
-  //     localStorage.setItem("sdUser", JSON.stringify(inputs.mobile));
-  //     setInputs((prev) => ({
-  //       ...prev,
-  //       details: defaultOtp, // Store the default OTP in inputs.details for testing
-  //     }));
-  //     setMessage("OTP sent successfully. (Default: 1234)"); // Notify user
-  //     setGenerated(true);
-  //   } catch (error) {
-  //     console.error(error);
-  //     setMessage("Error sending OTP");
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
-  // const verifyOTP = async () => {
-  //   if (!inputs.otp) {
-  //     setMessage("Enter OTP");
-  //     return;
-  //   }
-
-  //   try {
-  //     setLoading(true);
-
-  //     // Check the OTP against the default OTP
-  //     const defaultOtp = "1234";
-  //     if (inputs.otp === defaultOtp) {
-  //       console.log("Simulated OTP verification success.");
-  //       setGenerated(true)
-  //       // Fetch the Zoho CRM API token
-  //       const token = await getToken();
-  //       if (!token) {
-  //         setMessage("Authentication failed, unable to get token.");
-  //         return;
-  //       }
-
-  //       // Search for the lead by mobile number
-  //       const res = await axios.get(
-  //         `${url}/proxy?url=https://www.zohoapis.in/crm/v2/Leads/search?criteria=(Phone_Number:equals:${inputs.mobile})`,
-  //         {
-  //           headers: {
-  //             "Content-Type": "application/json",
-  //             Authorization: `Zoho-oauthtoken ${token}`,
-  //           },
-  //         }
-  //       );
-
-  //       const userData = res.data?.data?.[0];
-  //       if (userData) {
-  //         const recordId = userData.id;
-  //         console.log(recordId);
-
-  //         localStorage.setItem("recordId", recordId);
-
-  //         handleLogin(userData, inputs.mobile);
-
-  //         // Redirect to the desired page after login
-  //         navigate('/');
-  //       } else {
-  //         setMessage("No user data found for the provided mobile number.");
-  //       }
-  //     } else {
-  //       setMessage("OTP verification failed. Please try again.");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error verifying OTP or fetching user data:", error);
-  //     setMessage("An error occurred while verifying OTP or fetching user data.");
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
-  // otp
-
-  // get data
   const fetchPaymentStatusFromZoho = async (token) => {
     const recordId = localStorage.getItem("recordId");
     if (!recordId) {
       console.error("No record ID found.");
-      return null; // Return null if no record ID is found
+      return null;
     }
 
     try {
@@ -254,88 +159,51 @@ const Login = () => {
         }
       );
 
-      if (!response.ok)
-        throw new Error("Failed to fetch payment status from Zoho");
-
+      if (!response.ok) throw new Error("Failed to fetch payment status from Zoho");
       const data = await response.json();
-      return data; // Return the data received from Zoho
+      return data;
     } catch (error) {
       console.error("Error fetching payment status:", error);
-      return null; // Return null in case of an error
+      return null;
     }
   };
 
   useEffect(() => {
     const getTokenAndFetchStatus = async () => {
-      const token = await getToken(); // Fetch the token
-      setToken(token); // Set the token state
+      const token = await getToken();
+      setToken(token);
 
-      const status = await fetchPaymentStatusFromZoho(token); // Fetch payment status
+      const status = await fetchPaymentStatusFromZoho(token);
       if (status) {
-        setPaymentStatus(status.data[0]); // Update payment status in state
-        setStep(status.data[0].step); // Update payment status in state
+        setPaymentStatus(status.data[0]);
+        setStep(status.data[0].step);
       }
     };
 
-    getTokenAndFetchStatus(); // Call the async function
+    getTokenAndFetchStatus();
   }, []);
 
-  // workin
   const handleLogin = async (userData, mobile) => {
-    // console.log("This is login", userData);
-    // console.log("This is mobile", mobile);
+    const token = await getToken();
+    const status = await fetchPaymentStatusFromZoho(token);
 
-    // Fetch token and payment status before navigating
-    const token = await getToken(); // Fetch the token
-    const status = await fetchPaymentStatusFromZoho(token); // Fetch payment status
-
-    // console.log("User Data:", userData); // Log user data
-    // console.log("Payment Status:", status); // Log the entire payment status
-
-    // Check if userData is valid
     if (!userData) {
       console.error("No user data found.");
       navigate("/signup");
       return;
     }
 
-    // Check account status and mobile number
-    // if (
-    //   userData?.Account_Status === "Active" &&
-    //   userData?.Phone_Number === mobile
-    // ) {
-    //   console.log("Navigating to home page");
-    //   navigate("/"); // Redirect to home page
-    // } else if (userData?.Account_Status === "Enrolled") {
-    //   console.log("Account is enrolled, navigating based on steps");
-
     if (userData?.Account_Status === "Inactive") {
       console.error("Account is inactive. Access denied.");
-      setMessage("Your account is inactive. Please contact support."); // Display an error message
-      // Optionally, redirect to a different page, e.g., a support page or login page
-      navigate("/login"); // Redirect to support or another appropriate page
-      return; // Prevent further actions
-    } else if (
-      userData?.Account_Status === "Active" &&
-      userData?.Phone_Number === mobile
-    ) {
-      // console.log("Navigating to home page");
+      setMessage("Your account is inactive. Please contact support.");
+      navigate("/login");
+      return;
+    } else if (userData?.Account_Status === "Active" && userData?.Phone_Number === mobile) {
       navigate("/"); // Redirect to home page
     } else if (userData?.Account_Status === "Enrolled") {
-      // console.log("Account is enrolled, navigating based on steps");
-      // Proceed with your logic for enrolled users
-      // Ensure payment status is available before navigating
-      const status = await fetchPaymentStatusFromZoho(token); // Fetch payment status
-
-      // Log the current account status
-      // console.log("Account is enrolled status:", userData.Account_Status);
-
-      // Ensure payment status is available
+      const status = await fetchPaymentStatusFromZoho(token);
       if (status && status.data && status.data.length > 0) {
-        const paymentStep = status.data[0].Step; // Get the Step from paymentStatus
-        // console.log("Payment Step:", paymentStep); // Log the payment step
-
-        // Navigate based on payment step
+        const paymentStep = status.data[0].Step;
         switch (paymentStep) {
           case 4:
             navigate("/hold");
@@ -350,30 +218,9 @@ const Login = () => {
             navigate("/registrationfflow");
             break;
         }
-      } else {
-        // Default action if payment status is not available
-        // console.log(
-        //   "No payment status available, navigating to registration flow"
-        // );
-        navigate("/registrationfflow");
       }
-    } else if (userData?.Account_Status === "Inactive") {
-      // console.log("Account is inactive");
-      setMessage("Your account is inactive. Please contact support.");
-    } else {
-      // console.log("Redirecting to signup page");
-      navigate("/signup");
     }
   };
-
-  useEffect(() => {
-    if (message !== "") {
-      setTimeout(() => {
-        setMessage("");
-      }, 3000);
-    }
-  }, [message]);
-
   return (
     <>
       <div className="login-page">
