@@ -567,7 +567,7 @@ const SignUp = () => {
               </div>
             </div>
             {message && <p className="text-success">{message}</p>}
-            <button className="button" onClick={createUser} disabled={loading}>
+            <button className="button" onClick={createUser} disabled={loading} style={{ justifyContent: loading ? "center" : "space-between" }}>
               {loading ? (
                 <div className="spinner-border spinner-border-sm" role="status">
                   <span className="visually-hidden">Loading...</span>
