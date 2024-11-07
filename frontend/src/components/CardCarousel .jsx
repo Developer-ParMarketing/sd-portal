@@ -121,7 +121,7 @@ import axios from "axios";
 const Card = ({ title, emi, fee, oneTimeFee, total, unsecured }) => {
   const [token, setToken] = useState(null);
   const [paymentStatus, setPaymentStatus] = useState(null);
-  const { url, getToken ,setUser} = useContext(AppContext)
+  const { url, getToken ,user} = useContext(AppContext)
   // const calculatedEMI = unsecured
   //   ? parseFloat((unsecured / title).toFixed(2)) // If unsecured, calculate based on unsecured value and title
   //   : parseFloat(emi.replace(/[₹,]/g, "")) || 0; // If not, clean EMI of ₹ symbol and commas
@@ -147,18 +147,19 @@ const Card = ({ title, emi, fee, oneTimeFee, total, unsecured }) => {
 
   // Function to update payment information in Zoho CRM
   const updateZohoCRM = async () => {
-    ;
+    
+    
     const recordId = localStorage.getItem("recordId"); // Retrieve the record ID from localStorage
     const token = await getToken(); // Assuming you have a function to get the OAuth token
 
-    if (!recordId) {
-      console.error("No record ID found.");
-      return; // Early exit if recordId is not available
-    }
+    // if (!recordId) {
+    //   console.error("No record ID found.");
+    //   return; // Early exit if recordId is not available
+    // }
 
-    const payload = [
+    const data = [
       {
-        Plan_Type: `${title} Months`,
+        Plan_Type: `${title}`,
         Monthly_EMI_Payment: calculatedEMI.toString(), // Ensure it's a string
         Total_Plan_Amount: totalbil.toString(), // Ensure it's a string
         Subscription_Fees: subscription.toString(), // Ensure it's a string
@@ -168,8 +169,8 @@ const Card = ({ title, emi, fee, oneTimeFee, total, unsecured }) => {
 
     try {
       const response = await axios.put(
-        `${url}/proxy?url=https://www.zohoapis.in/crm/v2/Leads/${recordId}`,
-        payload,
+        `${url}/proxy?url=https://www.zohoapis.in/crm/v2/Leads/${recordId?recordId:user.id}`,
+        data,
         {
             headers: {
                 "Content-Type": "application/json",
@@ -177,6 +178,7 @@ const Card = ({ title, emi, fee, oneTimeFee, total, unsecured }) => {
             },
         }
     );
+
 
       if (!response.ok) throw new Error("Failed to update Zoho CRM");
 
@@ -196,7 +198,7 @@ const Card = ({ title, emi, fee, oneTimeFee, total, unsecured }) => {
   
     try {
       const response = await fetch(
-        `${url}/proxy?url=https://www.zohoapis.in/crm/v2/Leads/${recordId?recordId:setUser.id}`,
+        `${url}/proxy?url=https://www.zohoapis.in/crm/v2/Leads/${recordId?recordId:user.id}`,
         {
           method: "GET",
           headers: {

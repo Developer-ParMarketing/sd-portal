@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
 
 const SignUp = () => {
   const navigate = useNavigate();
-  const { url, getToken,setNewUser } = useContext(AppContext);
+  const { url, getToken } = useContext(AppContext);
   const [inputs, setInputs] = useState({
     name: "",
     email: "",
@@ -42,7 +42,7 @@ const SignUp = () => {
     } else if (!/^[A-Za-z\s]+$/.test(inputs.name.trim())) {
       newErrors.name = "Name must be a valid string (letters and spaces only)";
     }
-  
+
     if (!inputs.email.trim()) {
       newErrors.email = "Email is required";
     } else if (!/\S+@\S+\.\S+/.test(inputs.email)) {
@@ -90,7 +90,7 @@ const SignUp = () => {
           },
         }
       );
-
+      localStorage.setItem("crUser", JSON.stringify(inputs.mobile));
       const userData = res.data?.data?.[0];
 
       if (userData) {
@@ -132,12 +132,28 @@ const SignUp = () => {
         );
 
         if (createUserRes.data.data[0].code === "SUCCESS") {
+          let countdown = 60;
           setMessage(
-            "User created successfully. Please wait, processing your information..."
+            `User created successfully. Please wait, processing your information... 1:00`
           );
-          console.log('this is createUserRes',createUserRes);
-          setNewUser(createUserRes)
-          
+
+          // Start the countdown timer
+          const countdownInterval = setInterval(() => {
+            countdown -= 1;
+            const minutes = Math.floor(countdown / 60);
+            const seconds = countdown % 60;
+
+            // Update the message with the formatted countdown
+            setMessage(
+              `User created successfully. Please wait, processing your information... ${minutes}:${seconds
+                .toString()
+                .padStart(2, "0")}`
+            );
+
+            if (countdown <= 0) {
+              clearInterval(countdownInterval); // Stop the timer when it reaches 0
+            }
+          }, 1000);
 
           const intervalId = setInterval(async () => {
             const checkRes = await axios.get(
@@ -184,7 +200,7 @@ const SignUp = () => {
           </div>
           <ul className="d-flex align-items-lg-center align-items-start justify-content-start flex-lg-row flex-column terms-list">
               <li>
-                <Link to="/termsconditions">Term & Conditions</Link>
+                <Link to="/termsconditions">Terms & Conditions</Link>
               </li>
               <li>
                 <a
@@ -192,7 +208,7 @@ const SignUp = () => {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  Privacy policy
+                  Privacy Policy
                 </a>
               </li>
               <li>
@@ -222,7 +238,9 @@ const SignUp = () => {
                     Full Name
                   </label>
                   {errors.name && (
-                    <span className="error-message text-danger">{errors.name}</span>
+                    <span className="error-message text-danger">
+                      {errors.name}
+                    </span>
                   )}
                 </div>
 
@@ -240,7 +258,9 @@ const SignUp = () => {
                     Email
                   </label>
                   {errors.email && (
-                    <span className="error-message text-danger">{errors.email}</span>
+                    <span className="error-message text-danger">
+                      {errors.email}
+                    </span>
                   )}
                 </div>
 
@@ -258,7 +278,9 @@ const SignUp = () => {
                     Mobile No
                   </label>
                   {errors.mobile && (
-                    <span className="error-message text-danger">{errors.mobile}</span>
+                    <span className="error-message text-danger">
+                      {errors.mobile}
+                    </span>
                   )}
                 </div>
               </div>

@@ -90,7 +90,7 @@ const Income = () => {
 
       // Make the PUT request to update data in Zoho CRM
       const response = await axios.put(
-        `${url}/proxy?url=https://www.zohoapis.in/crm/v2/Leads/${recordId?recordId:setUser.id}`,
+        `${url}/proxy?url=https://www.zohoapis.in/crm/v2/Leads/${recordId?recordId:user.id}`,
         combinedData,
         {
           headers: {
@@ -132,6 +132,12 @@ const Income = () => {
                 style={inputStyle}
                 ref={incomeRef}
                 required
+                min="1" // This ensures the number cannot be less than 1
+                onChange={(e) => {
+                  if (e.target.value <= 0) {
+                    e.target.value = ""; // Clear the input if value is <= 0
+                  }
+                }}
               />
               <span className="tooltip-icon">
                 <span style={{ fontWeight: "bold" }}> i</span>
@@ -148,6 +154,12 @@ const Income = () => {
               style={inputStyle}
               ref={expensesRef}
               required
+              min="1" // This ensures the number cannot be less than 1
+              onChange={(e) => {
+                if (e.target.value <= 0) {
+                  e.target.value = ""; // Clear the input if value is <= 0
+                }
+              }}
             />
               <span className="tooltip-icon">
                 <span style={{ fontWeight: "bold" }}> i</span>

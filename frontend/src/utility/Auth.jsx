@@ -18,9 +18,6 @@
 
 //   const authenticate = async () => {
 //     const sdUser = JSON.parse(localStorage.getItem("sdUser"));
-//     console.log('this is setUser',setUser);
-//     console.log('this is setUser',user);
-    
 
 //     // Restrict access to the homepage ("/") if payment is not completed
 //     if (!sdUser) {
@@ -171,16 +168,6 @@
 // };
 
 // export default Auth;
-
-
-
-
-
-
-
-
-
-
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom"; // Import useLocation to check the current path
 import { AppContext } from "../context/AppContext";
@@ -201,13 +188,10 @@ const Auth = ({ Component }) => {
 
   const authenticate = async () => {
     const sdUser = JSON.parse(localStorage.getItem("sdUser"));
-    console.log('this is setUser',setUser);
-    console.log('this is setUser ph no',setUser.Phone_Number);
-    console.log('this is setUser',user);
-    
+    const crUser = JSON.parse(localStorage.getItem("crUser"));
 
     // Restrict access to the homepage ("/") if payment is not completed
-    if (!sdUser) {
+    if (!(sdUser || crUser)) {
       // If user is not logged in, redirect to login
       navigate("/login", { replace: true });
       return;
@@ -239,7 +223,7 @@ const Auth = ({ Component }) => {
 
     try {
       const res = await axios.get(
-        `${url}/proxy?url=https://www.zohoapis.in/crm/v2/Leads/search?criteria=((Phone_Number:equals:${sdUser?sdUser:setUser.Phone_Number}))`,
+        `${url}/proxy?url=https://www.zohoapis.in/crm/v2/Leads/search?criteria=((Phone_Number:equals:${sdUser || crUser}))`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -303,7 +287,7 @@ const Auth = ({ Component }) => {
 
     try {
       const response = await fetch(
-        `${url}/proxy?url=https://www.zohoapis.in/crm/v2/Leads/${recordId?recordId:setUser.id}`,
+        `${url}/proxy?url=https://www.zohoapis.in/crm/v2/Leads/${recordId}`,
         {
           method: "GET",
           headers: {

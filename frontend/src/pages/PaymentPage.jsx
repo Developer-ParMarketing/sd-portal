@@ -10,9 +10,11 @@ import { toast } from "react-toastify";
 const PaymentPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { url, getToken, user ,setUser} = useContext(AppContext);
+  const { url, getToken, user } = useContext(AppContext);
   const [loading, setLoading] = useState(false);
   const [isEnrolled, setIsEnrolled] = useState(false);
+
+  console.log(user);
 
   // Fetch the data from location or localStorage
   const {
@@ -29,9 +31,7 @@ const PaymentPage = () => {
   const [title, setTitle] = useState(passedTitle || "Please Select Your Plan");
   const [paymentStatus, setPaymentStatus] = useState(null);
   const [emi, setEmi] = useState(passedEmi || "Please Select Your Plan");
-  const [oneTimeFee, setOneTimeFee] = useState(
-    passedOneTimeFee || "599"
-  );
+  const [oneTimeFee, setOneTimeFee] = useState(passedOneTimeFee || "599");
   const [calculatedEMI, setCalculatedEMIe] = useState(
     passedCalculatedEMI || "Please Select Your Plan"
   );
@@ -67,23 +67,26 @@ const PaymentPage = () => {
   const handlePayment = async () => {
     setLoading(true);
     try {
-      const response = await fetch("https://api.singledebt.in/api/payment/orders", {
-      // const response = await fetch("http://localhost:8012/api/payment/orders", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          amount: oneTimeFee,
-          currency: "INR",
-        }),
-      });
+      const response = await fetch(
+        "https://api.singledebt.in/api/payment/orders",
+        {
+          // const response = await fetch("http://localhost:8012/api/payment/orders", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            amount: oneTimeFee,
+            currency: "INR",
+          }),
+        }
+      );
 
       const orderData = await response.json();
       if (!orderData.id) throw new Error("Failed to create Razorpay order");
 
       const options = {
-        key: 'rzp_live_rTeC0Xl72J36OB',
+        key: "rzp_live_rTeC0Xl72J36OB",
         // key: process.env.REACT_APP_RAZORPAY_KEY_ID,
         amount: orderData.amount,
         currency: orderData.currency,
@@ -179,7 +182,9 @@ const PaymentPage = () => {
     try {
       // Prepare the data according to the Zoho API specification
       const response = await fetch(
-        `${url}/proxy?url=https://www.zohoapis.in/crm/v2/Leads/${recordId?recordId:setUser.id}`,
+        `${url}/proxy?url=https://www.zohoapis.in/crm/v2/Leads/${
+          recordId ? recordId : user.id
+        }`,
         {
           method: "put",
           headers: {
@@ -368,26 +373,31 @@ const PaymentPage = () => {
                       ₹
                       {paymentStatus
                         ? Math.round(paymentStatus.Monthly_EMI_Payment)
-                        : ""}
+                        : Math.round(user.Monthly_EMI_Payment)}
                     </strong>{" "}
                     per month, saving{" "}
                     <strong>
                       ₹
                       {Math.abs(
                         Math.round(
-                          (paymentStatus ? paymentStatus.Income : 0) -
-                            (paymentStatus ? paymentStatus.Expenses : 0) -
-                            (paymentStatus
-                              ? paymentStatus.Monthly_EMI_Payment
-                              : 0)
+                          ((paymentStatus && paymentStatus.Income) ||
+                            user.Income ||
+                            0) -
+                            ((paymentStatus && paymentStatus.Expenses) ||
+                              user.Expenses ||
+                              0) -
+                            ((paymentStatus &&
+                              paymentStatus.Monthly_EMI_Payment) ||
+                              user?.Monthly_EMI_Payment ||
+                              0)
                         )
                       )}
-                    </strong>{" "}
+                    </strong>
                     {/* <br />
                 {paymentStatus ? paymentStatus.Income : 0} <br />
                 {paymentStatus ? paymentStatus.Expenses : 0} <br />
                 {paymentStatus ? paymentStatus.Monthly_EMI_Payment : 0} <br /> */}
-                    compared to your original EMI payments.
+                    <span style={{marginLeft:'3px'}}>compared to your original EMI payments.</span>
                   </span>
                 </li>
 
@@ -445,7 +455,11 @@ const PaymentPage = () => {
                     >
                       {/* {title || "Please Select Your Plan"} Months{" "} */}
                       {title
-                        ? `${paymentStatus ? paymentStatus.Plan_Type : ""}`
+                        ? `${
+                            paymentStatus
+                              ? paymentStatus.Plan_Type
+                              : passedTitle
+                          } Months`
                         : "Please Select Your Plan"}
                       {/* Ensure data is always displayed */}
                     </span>
@@ -469,14 +483,14 @@ const PaymentPage = () => {
                     <span
                       style={{ flex: 1, fontSize: "1rem", textAlign: "right" }}
                     >
-                      {/* {emi || "Please Select Your Plan"} */}₹
+                      {/* {emi || "Please Select Your Plan"} */}
                       {emi
                         ? `${
                             paymentStatus
                               ? Math.round(
                                   paymentStatus.Monthly_EMI_Payment
                                 ).toLocaleString()
-                              : ""
+                              : emi
                           }`
                         : "Please Select Your Plan"}
                     </span>
