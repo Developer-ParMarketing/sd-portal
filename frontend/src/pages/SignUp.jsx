@@ -39,7 +39,10 @@ const SignUp = () => {
 
     if (!inputs.name.trim()) {
       newErrors.name = "Name is required";
+    } else if (!/^[A-Za-z\s]+$/.test(inputs.name.trim())) {
+      newErrors.name = "Name must be a valid string (letters and spaces only)";
     }
+  
     if (!inputs.email.trim()) {
       newErrors.email = "Email is required";
     } else if (!/\S+@\S+\.\S+/.test(inputs.email)) {
