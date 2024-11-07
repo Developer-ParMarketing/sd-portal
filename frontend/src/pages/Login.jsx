@@ -120,21 +120,28 @@ const Login = () => {
           localStorage.setItem("recordId", recordId);
           handleLogin(userData, inputs.mobile);
         } else {
-          setMessage("No user data found for the provided mobile number. Please sign up.");
-          toast.error("No user data found for the provided mobile number! Please sign up.", {
-            onClose: () => {
-              setTimeout(() => {
-                navigate("/signup");
-              }, 300);
-            },
-          });
+          setMessage(
+            "No user data found for the provided mobile number. Please sign up."
+          );
+          toast.error(
+            "No user data found for the provided mobile number! Please sign up.",
+            {
+              onClose: () => {
+                setTimeout(() => {
+                  navigate("/signup");
+                }, 300);
+              },
+            }
+          );
         }
       } else {
         setMessage("OTP verification failed. Please try again.");
       }
     } catch (error) {
       console.error("Error verifying OTP or fetching user data:", error);
-      setMessage("An error occurred while verifying OTP or fetching user data.");
+      setMessage(
+        "An error occurred while verifying OTP or fetching user data."
+      );
     } finally {
       setLoading(false);
     }
@@ -159,7 +166,8 @@ const Login = () => {
         }
       );
 
-      if (!response.ok) throw new Error("Failed to fetch payment status from Zoho");
+      if (!response.ok)
+        throw new Error("Failed to fetch payment status from Zoho");
       const data = await response.json();
       return data;
     } catch (error) {
@@ -198,7 +206,10 @@ const Login = () => {
       setMessage("Your account is inactive. Please contact support.");
       navigate("/login");
       return;
-    } else if (userData?.Account_Status === "Active" && userData?.Phone_Number === mobile) {
+    } else if (
+      userData?.Account_Status === "Active" &&
+      userData?.Phone_Number === mobile
+    ) {
       navigate("/"); // Redirect to home page
     } else if (userData?.Account_Status === "Enrolled") {
       const status = await fetchPaymentStatusFromZoho(token);
@@ -241,7 +252,11 @@ const Login = () => {
                 <Link to="/termsconditions">Term & Conditions</Link>
               </li>
               <li>
-                <a href="https://singledebt.in/privacy-policy" target="_blank" rel="noreferrer">
+                <a
+                  href="https://singledebt.in/privacy-policy"
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   Privacy policy
                 </a>
               </li>
@@ -331,6 +346,15 @@ const Login = () => {
                   Regenerate OTP
                 </p>
               )}
+              <p class="text-dark pt-2">
+                Not a Customer Yet?
+                <a
+                  href="/signup"
+                  class="fw-bold fs-6 text-danger text-decoration-none ms-2 me-2 "
+                >
+                  Sign Up Here
+                </a>
+              </p>
             </div>
 
             <div className="d-flex align-items-sm-center align-items-start justify-content-start gap-2 flex-sm-row flex-column">

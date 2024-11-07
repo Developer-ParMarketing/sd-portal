@@ -172,12 +172,26 @@ const SignUp = () => {
           </Link>
           <div>
             <h2>Welcome to SingleDebt Portal</h2>
-            <p>Where your financial journey begins towards a debt-free future</p>
+            <p>
+              Where your financial journey begins towards a debt-free future
+            </p>
           </div>
           <ul className="terms-list">
-            <li><Link to="/termsconditions">Term & Conditions</Link></li>
-            <li><a href="https://singledebt.in/privacy-policy" target="_blank" rel="noreferrer">Privacy policy</a></li>
-            <li><Link to="/faq">FAQ</Link></li>
+            <li>
+              <Link to="/termsconditions">Term & Conditions</Link>
+            </li>
+            <li>
+              <a
+                href="https://singledebt.in/privacy-policy"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Privacy policy
+              </a>
+            </li>
+            <li>
+              <Link to="/faq">FAQ</Link>
+            </li>
           </ul>
         </div>
       </div>
@@ -198,8 +212,12 @@ const SignUp = () => {
                     value={inputs.name}
                     onChange={handleInputs}
                   />
-                  <label htmlFor="name" className="form-label input-label">Full Name</label>
-                  {errors.name && <span className="error-message">{errors.name}</span>}
+                  <label htmlFor="name" className="form-label input-label">
+                    Full Name
+                  </label>
+                  {errors.name && (
+                    <span className="error-message text-danger">{errors.name}</span>
+                  )}
                 </div>
 
                 <div className="input-group">
@@ -212,8 +230,12 @@ const SignUp = () => {
                     value={inputs.email}
                     onChange={handleInputs}
                   />
-                  <label htmlFor="email" className="form-label input-label">Email</label>
-                  {errors.email && <span className="error-message">{errors.email}</span>}
+                  <label htmlFor="email" className="form-label input-label">
+                    Email
+                  </label>
+                  {errors.email && (
+                    <span className="error-message text-danger">{errors.email}</span>
+                  )}
                 </div>
 
                 <div className="input-group">
@@ -226,8 +248,12 @@ const SignUp = () => {
                     value={inputs.mobile}
                     onChange={handleInputs}
                   />
-                  <label htmlFor="mobile" className="form-label input-label">Mobile No</label>
-                  {errors.mobile && <span className="error-message">{errors.mobile}</span>}
+                  <label htmlFor="mobile" className="form-label input-label">
+                    Mobile No
+                  </label>
+                  {errors.mobile && (
+                    <span className="error-message text-danger">{errors.mobile}</span>
+                  )}
                 </div>
               </div>
 
@@ -251,13 +277,30 @@ const SignUp = () => {
                 </>
               )}
             </button>
+            <p class="text-dark pt-2">
+              Already a Customer?
+              <a
+                href="/login"
+                class="fw-bold fs-6 text-danger text-decoration-none ms-2 me-2"
+              >
+                Login Here
+              </a>
+            </p>
           </div>
           <div className="d-flex">
-            <a href="https://play.google.com/store/apps/details?id=com.singledebt&hl=en_IN" target="_blank" className="store-image" rel="noreferrer">
+            <a
+              href="https://play.google.com/store/apps/details?id=com.singledebt&hl=en_IN"
+              target="_blank"
+              className="store-image"
+              rel="noreferrer"
+            >
               <img src={googleStore} className="invert-image" alt="" />
             </a>
-            <a href="https://apps.apple.com/in/app/singledebt/id6480590793" target="_blank" className="store-image" rel
-="noreferrer"
+            <a
+              href="https://apps.apple.com/in/app/singledebt/id6480590793"
+              target="_blank"
+              className="store-image"
+              rel="noreferrer"
             >
               <img src={appStore} className="invert-image" alt="" />
             </a>
