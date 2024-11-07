@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
 
 const SignUp = () => {
   const navigate = useNavigate();
-  const { url, getToken } = useContext(AppContext);
+  const { url, getToken,setNewUser } = useContext(AppContext);
   const [inputs, setInputs] = useState({
     name: "",
     email: "",
@@ -135,6 +135,9 @@ const SignUp = () => {
           setMessage(
             "User created successfully. Please wait, processing your information..."
           );
+          console.log('this is createUserRes',createUserRes);
+          setNewUser(createUserRes)
+          
 
           const intervalId = setInterval(async () => {
             const checkRes = await axios.get(
@@ -179,23 +182,23 @@ const SignUp = () => {
               Where your financial journey begins towards a debt-free future
             </p>
           </div>
-          <ul className="terms-list">
-            <li>
-              <Link to="/termsconditions">Term & Conditions</Link>
-            </li>
-            <li>
-              <a
-                href="https://singledebt.in/privacy-policy"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Privacy policy
-              </a>
-            </li>
-            <li>
-              <Link to="/faq">FAQ</Link>
-            </li>
-          </ul>
+          <ul className="d-flex align-items-lg-center align-items-start justify-content-start flex-lg-row flex-column terms-list">
+              <li>
+                <Link to="/termsconditions">Term & Conditions</Link>
+              </li>
+              <li>
+                <a
+                  href="https://singledebt.in/privacy-policy"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Privacy policy
+                </a>
+              </li>
+              <li>
+                <Link to="/faq">FAQ</Link>
+              </li>
+            </ul>
         </div>
       </div>
       <div className="right-part">

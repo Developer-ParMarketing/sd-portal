@@ -115,6 +115,8 @@ const Login = () => {
         );
 
         const userData = res.data?.data?.[0];
+        console.log(userData);
+        
         if (userData) {
           const recordId = userData.id;
           localStorage.setItem("recordId", recordId);
