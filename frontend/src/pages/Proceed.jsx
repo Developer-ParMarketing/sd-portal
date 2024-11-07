@@ -10,7 +10,7 @@ import { AppContext } from "../context/AppContext";
 import axios from "axios";
 
 const Proceed = () => {
-  const { url, user, getToken,newUser,setUser } = useContext(AppContext);
+  const { url, user, getToken } = useContext(AppContext);
 
   const navigate = useNavigate();
   const unsecuredCreditorsRef = useRef();
@@ -88,10 +88,14 @@ const Proceed = () => {
       const token = await getToken();
       const recordId = localStorage.getItem("recordId");
       // console.log(recordId);
-      // console.log(token);
+      // console.log(token);newUser
+      console.log(user.id);
 
+      const uid = user.is;
       const response = await axios.put(
-        `${url}/proxy?url=https://www.zohoapis.in/crm/v2/Leads/${recordId?recordId:setUser.id}`,
+        `${url}/proxy?url=https://www.zohoapis.in/crm/v2/Leads/${
+          recordId ? recordId : user.id
+        }`,
         formData,
         {
           headers: {
@@ -132,8 +136,7 @@ const Proceed = () => {
     { label: "Bounced Cheques", value: "bounced_cheques" },
     { label: "Court Hearings", value: "court_hearings" },
   ];
-console.log('thisis s',user);
-console.log('thisis newUser',newUser);
+  console.log("thisis s", user);
 
   return (
     <>
@@ -212,11 +215,18 @@ console.log('thisis newUser',newUser);
                     style={inputStyle}
                     ref={unsecuredCreditorsRef}
                     required
+                    min="1" // This ensures the number cannot be less than 1
+                    onChange={(e) => {
+                      if (e.target.value <= 0) {
+                        e.target.value = ""; // Clear the input if value is <= 0
+                      }
+                    }}
                   />
                   <span className="tooltip-icon">
-                   <span style={{fontWeight:'bold'}}> i</span>
+                    <span style={{ fontWeight: "bold" }}> i</span>
                     <span className="tooltip-text">
-                    Please provide the total number of credit cards and personal loans you have.
+                      Please provide the total number of credit cards and
+                      personal loans you have.
                     </span>
                   </span>
                 </div>
@@ -228,11 +238,18 @@ console.log('thisis newUser',newUser);
                     style={inputStyle}
                     ref={totalDebtsRef}
                     required
+                    min="1" // This ensures the number cannot be less than 1
+                    onChange={(e) => {
+                      if (e.target.value <= 0) {
+                        e.target.value = ""; // Clear the input if value is <= 0
+                      }
+                    }}
                   />
                   <span className="tooltip-icon">
-                  <span style={{fontWeight:'bold'}}> i</span>
+                    <span style={{ fontWeight: "bold" }}> i</span>
                     <span className="tooltip-text">
-                    Enter the total amount of debt currently outstanding on all your credit cards and personal loans.
+                      Enter the total amount of debt currently outstanding on
+                      all your credit cards and personal loans.
                     </span>
                   </span>
                 </div>
@@ -244,11 +261,18 @@ console.log('thisis newUser',newUser);
                     style={inputStyle}
                     ref={totalEMIRef}
                     required
+                    min="1" // This ensures the number cannot be less than 1
+                    onChange={(e) => {
+                      if (e.target.value <= 0) {
+                        e.target.value = ""; // Clear the input if value is <= 0
+                      }
+                    }}
                   />
                   <span className="tooltip-icon">
-                  <span style={{fontWeight:'bold'}}> i</span>
+                    <span style={{ fontWeight: "bold" }}> i</span>
                     <span className="tooltip-text">
-                    The total monthly EMI required for all unsecured debts, including credit cards and personal loans.
+                      The total monthly EMI required for all unsecured debts,
+                      including credit cards and personal loans.
                     </span>
                   </span>
                 </div>
@@ -272,9 +296,12 @@ console.log('thisis newUser',newUser);
                       ))}
                   </select>
                   <span className="tooltip-icon">
-                  <span style={{fontWeight:'bold'}}> i</span>
+                    <span style={{ fontWeight: "bold" }}> i</span>
                     <span className="tooltip-text">
-                    Describe the type(s) of harassment you are facing from creditors (e.g., repeated phone calls, messages, unannounced visits). Include all relevant forms of harassment.
+                      Describe the type(s) of harassment you are facing from
+                      creditors (e.g., repeated phone calls, messages,
+                      unannounced visits). Include all relevant forms of
+                      harassment.
                     </span>
                   </span>
                 </div>
@@ -297,9 +324,11 @@ console.log('thisis newUser',newUser);
                       ))}
                   </select>
                   <span className="tooltip-icon">
-                  <span style={{fontWeight:'bold'}}> i</span>
+                    <span style={{ fontWeight: "bold" }}> i</span>
                     <span className="tooltip-text">
-                      Provide details of any legal actions taken against you by creditors (e.g., legal notices, arbitration, court hearings, bounced cheques, etc.).
+                      Provide details of any legal actions taken against you by
+                      creditors (e.g., legal notices, arbitration, court
+                      hearings, bounced cheques, etc.).
                     </span>
                   </span>
                 </div>
@@ -336,7 +365,7 @@ console.log('thisis newUser',newUser);
                     z-index: 1;
                     bottom: 125%; /* Position above the icon */
                     // left: 50%;
-                    right:100%;
+                    right: 100%;
                     margin-left: -60px; /* Center the tooltip */
                     width: 120px; /* Tooltip width */
                     opacity: 0;

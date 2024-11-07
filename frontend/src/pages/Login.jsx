@@ -251,7 +251,7 @@ const Login = () => {
             </div>
             <ul className="d-flex align-items-lg-center align-items-start justify-content-start flex-lg-row flex-column terms-list">
               <li>
-                <Link to="/termsconditions">Term & Conditions</Link>
+                <Link to="/termsconditions">Terms & Conditions</Link>
               </li>
               <li>
                 <a
@@ -259,7 +259,7 @@ const Login = () => {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  Privacy policy
+                  Privacy Policy
                 </a>
               </li>
               <li>
