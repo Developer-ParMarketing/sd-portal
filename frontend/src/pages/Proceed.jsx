@@ -10,7 +10,7 @@ import { AppContext } from "../context/AppContext";
 import axios from "axios";
 
 const Proceed = () => {
-  const { url, user, getToken } = useContext(AppContext);
+  const { url, user, getToken,newUser,setUser } = useContext(AppContext);
 
   const navigate = useNavigate();
   const unsecuredCreditorsRef = useRef();
@@ -91,7 +91,7 @@ const Proceed = () => {
       // console.log(token);
 
       const response = await axios.put(
-        `${url}/proxy?url=https://www.zohoapis.in/crm/v2/Leads/${recordId}`,
+        `${url}/proxy?url=https://www.zohoapis.in/crm/v2/Leads/${recordId?recordId:setUser.id}`,
         formData,
         {
           headers: {
@@ -132,6 +132,8 @@ const Proceed = () => {
     { label: "Bounced Cheques", value: "bounced_cheques" },
     { label: "Court Hearings", value: "court_hearings" },
   ];
+console.log('thisis s',user);
+console.log('thisis newUser',newUser);
 
   return (
     <>

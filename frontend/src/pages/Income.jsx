@@ -9,7 +9,7 @@ import { AppContext } from "../context/AppContext";
 import axios from "axios";
 
 const Income = () => {
-  const { url, user, getToken } = useContext(AppContext);
+  const { url, user, getToken,setUser } = useContext(AppContext);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -90,7 +90,7 @@ const Income = () => {
 
       // Make the PUT request to update data in Zoho CRM
       const response = await axios.put(
-        `${url}/proxy?url=https://www.zohoapis.in/crm/v2/Leads/${recordId}`,
+        `${url}/proxy?url=https://www.zohoapis.in/crm/v2/Leads/${recordId?recordId:setUser.id}`,
         combinedData,
         {
           headers: {

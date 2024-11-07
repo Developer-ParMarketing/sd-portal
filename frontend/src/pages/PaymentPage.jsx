@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
 const PaymentPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { url, getToken, user } = useContext(AppContext);
+  const { url, getToken, user ,setUser} = useContext(AppContext);
   const [loading, setLoading] = useState(false);
   const [isEnrolled, setIsEnrolled] = useState(false);
 
@@ -179,7 +179,7 @@ const PaymentPage = () => {
     try {
       // Prepare the data according to the Zoho API specification
       const response = await fetch(
-        `${url}/proxy?url=https://www.zohoapis.in/crm/v2/Leads/${recordId}`,
+        `${url}/proxy?url=https://www.zohoapis.in/crm/v2/Leads/${recordId?recordId:setUser.id}`,
         {
           method: "put",
           headers: {

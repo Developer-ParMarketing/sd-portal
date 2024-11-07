@@ -121,7 +121,7 @@ import axios from "axios";
 const Card = ({ title, emi, fee, oneTimeFee, total, unsecured }) => {
   const [token, setToken] = useState(null);
   const [paymentStatus, setPaymentStatus] = useState(null);
-  const { url, getToken } = useContext(AppContext)
+  const { url, getToken ,setUser} = useContext(AppContext)
   // const calculatedEMI = unsecured
   //   ? parseFloat((unsecured / title).toFixed(2)) // If unsecured, calculate based on unsecured value and title
   //   : parseFloat(emi.replace(/[₹,]/g, "")) || 0; // If not, clean EMI of ₹ symbol and commas
@@ -196,7 +196,7 @@ const Card = ({ title, emi, fee, oneTimeFee, total, unsecured }) => {
   
     try {
       const response = await fetch(
-        `${url}/proxy?url=https://www.zohoapis.in/crm/v2/Leads/${recordId}`,
+        `${url}/proxy?url=https://www.zohoapis.in/crm/v2/Leads/${recordId?recordId:setUser.id}`,
         {
           method: "GET",
           headers: {

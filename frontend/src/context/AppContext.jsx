@@ -10,6 +10,7 @@ const AppContextProvider = ({ children }) => {
 // >>>>>>> d60c429a3dc3f9b3d34ccebcb85faecae49b0600
   const [user, setUser] = useState(null);
   const [selectedPlanData, setSelectedPlanData] = useState({});
+  const [newUser, setNewUser] = useState(null);
   
 
   //
@@ -26,7 +27,7 @@ const AppContextProvider = ({ children }) => {
     }
   };
   return (
-    <AppContext.Provider value={{ url, user, setUser, getToken ,selectedPlanData, setSelectedPlanData}}>
+    <AppContext.Provider value={{ url, user, setUser, getToken ,selectedPlanData, setSelectedPlanData,newUser, setNewUser}}>
       {children}
     </AppContext.Provider>
   );
