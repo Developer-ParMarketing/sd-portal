@@ -126,16 +126,14 @@ const AppBar = () => {
           onClick={openRefModal}
           style={{ cursor: "pointer" }}
         >
-          <marquee behavior="" direction="left">
+         <marquee behavior="" direction="left">
             <p className="text-white">
-              <span className="fw-bold">Recommend a friend or family </span>
+              <span className="fw-bold">Refer and earn INR 1,000! Recommend SingleDebt </span>
               <span className="me-2">
-                and Earn extra income, if you know someone who is being harassed
-                or struggling with their debts
+              to someone being harassed or struggling with their debts and get
               </span>
               <span className="fw-bold">
-                <LiaRupeeSignSolid /> 1,000 for anyone who enrols with us. Click
-                here.{" "}
+                <LiaRupeeSignSolid /> INR 1,000 when they enrol with us. Click here.
               </span>
             </p>
           </marquee>

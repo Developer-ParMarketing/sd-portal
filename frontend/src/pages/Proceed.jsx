@@ -91,10 +91,10 @@ const Proceed = () => {
       // console.log(token);newUser
       console.log(user.id);
 
-      const uid = user.is;
+      const uid = user.id;
       const response = await axios.put(
         `${url}/proxy?url=https://www.zohoapis.in/crm/v2/Leads/${
-          recordId ? recordId : user.id
+          recordId ? recordId : uid
         }`,
         formData,
         {
@@ -104,7 +104,9 @@ const Proceed = () => {
           },
         }
       );
+console.log(response);
 
+      
       if (response.data.data[0].code === "SUCCESS") {
         toast.success("Data updated successfully!");
         navigate("/income-and-expense");
