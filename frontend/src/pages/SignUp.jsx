@@ -200,16 +200,10 @@ const SignUp = () => {
           </div>
           <ul className="d-flex align-items-lg-center align-items-start justify-content-start flex-lg-row flex-column terms-list">
               <li>
-                <Link to="/termsconditions">Terms & Conditions</Link>
+                <Link to="/terms-conditionpage">Terms & Conditions</Link>
               </li>
               <li>
-                <a
-                  href="https://singledebt.in/privacy-policy"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Privacy Policy
-                </a>
+                <Link to="/privacypolicy">Privacy Policy</Link>
               </li>
               <li>
                 <Link to="/faq">FAQ</Link>

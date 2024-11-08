@@ -1,0 +1,23 @@
+/* PrivacyPolicy.css */
+.h3 {
+  color: #d51c29; /* Bootstrap primary color for headers */
+  margin-top: 20px;
+  font-size: larger;
+}
+.p {
+  font-size: 1rem;
+  color: #333;
+  padding: 2px 0;
+}
+
+.section {
+  padding: 5px 0;
+}
+
+.ul {
+  margin: 10px 0 10px 2% ;
+  list-style: circle;
+}
+.li {
+  padding: 5px 0;
+}
