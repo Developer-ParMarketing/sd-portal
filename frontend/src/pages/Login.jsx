@@ -213,6 +213,28 @@ const Login = () => {
       userData?.Phone_Number === mobile
     ) {
       navigate("/"); // Redirect to home page
+    } else if (
+      userData?.Account_Status === null ||
+      userData?.Account_Status === undefined ||
+      userData?.Account_Status === ""
+    ) {
+      const data = [
+        {
+          Account_Status: "Enrolled",
+        },
+      ];
+
+      const recordId = localStorage.getItem("recordId");
+      const response = await axios.put(`${url}/proxy?url=https://www.zohoapis.in/crm/v2/Leads/${recordId}`, data, {
+        headers : {
+          "Content-Type": "application/json",
+          Authorization: `Zoho-oauthtoken ${token}`,
+        }
+      })
+      navigate("/registrationfflow");
+      // console.log(response);
+
+      // navigate("/registrationfflow");
     } else if (userData?.Account_Status === "Enrolled") {
       const status = await fetchPaymentStatusFromZoho(token);
       if (status && status.data && status.data.length > 0) {
