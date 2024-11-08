@@ -350,12 +350,10 @@ const Login = () => {
               )}
               <p class="text-dark pt-2">
                 Not a Customer Yet?
-                <a
-                  href="/signup"
-                  class="fw-bold fs-6 text-danger text-decoration-none ms-2 me-2 "
-                >
-                  Sign Up Here
-                </a>
+                <Link to="/signup" className="fw-bold fs-6 text-danger text-decoration-none ms-2 me-2">
+  Sign Up Here
+</Link>
+
               </p>
             </div>
 

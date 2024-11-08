@@ -307,12 +307,12 @@ const SignUp = () => {
             </button>
             <p class="text-dark pt-2">
               Already a Customer?
-              <a
-                href="/login"
+              <Link
+                to="/login"
                 class="fw-bold fs-6 text-danger text-decoration-none ms-2 me-2"
               >
                 Login Here
-              </a>
+              </Link>
             </p>
           </div>
           <div className="d-flex">
