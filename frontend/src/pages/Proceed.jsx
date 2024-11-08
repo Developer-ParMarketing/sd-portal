@@ -338,7 +338,7 @@ console.log(response);
 
                 {/*  */}
                 <button type="submit" className="procBtn" style={buttonStyle}>
-                  Submit
+                  Next
                 </button>
 
                 <style jsx>{`

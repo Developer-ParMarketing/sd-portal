@@ -485,7 +485,7 @@ const PaymentPage = () => {
                     >
                       {/* {emi || "Please Select Your Plan"} */}
                       {emi
-                        ? `${
+                        ? `₹${
                             paymentStatus
                               ? Math.round(
                                   paymentStatus.Monthly_EMI_Payment
