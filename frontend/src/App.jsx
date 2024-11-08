@@ -35,6 +35,8 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ScrollToTop from "./components/ScrollToTop";
 import NotFound from "./pages/NotFound";
+import Privacypolicy from "./pages/Privacypolicy";
+import TermsConditionpage from "./pages/Terms-Conditionpage";
 
 
 
@@ -83,6 +85,8 @@ const App = () => {
         <Route path="/termsconditions" element={<TermsConditions />} />
         <Route path="/hold" element={<Auth Component={Hold }/>} />
         <Route path="/faq" element={<FAQ />} />
+        <Route path="/privacypolicy" element={<Privacypolicy />} />
+        <Route path="/terms-conditionpage" element={<TermsConditionpage />} />
         <Route path="*" element={<NotFound />} />
 
         {/* try and test cards */}

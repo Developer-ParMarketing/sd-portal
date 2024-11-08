@@ -116,7 +116,7 @@ const Login = () => {
 
         const userData = res.data?.data?.[0];
         console.log(userData);
-        
+
         if (userData) {
           const recordId = userData.id;
           localStorage.setItem("recordId", recordId);
@@ -251,16 +251,10 @@ const Login = () => {
             </div>
             <ul className="d-flex align-items-lg-center align-items-start justify-content-start flex-lg-row flex-column terms-list">
               <li>
-                <Link to="/termsconditions">Terms & Conditions</Link>
+                <Link to="/terms-conditionpage">Terms & Conditions</Link>
               </li>
               <li>
-                <a
-                  href="https://singledebt.in/privacy-policy"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Privacy Policy
-                </a>
+                <Link to="/privacypolicy">Privacy Policy</Link>
               </li>
               <li>
                 <Link to="/faq">FAQ</Link>
@@ -350,10 +344,12 @@ const Login = () => {
               )}
               <p class="text-dark pt-2">
                 Not a Customer Yet?
-                <Link to="/signup" className="fw-bold fs-6 text-danger text-decoration-none ms-2 me-2">
-  Sign Up Here
-</Link>
-
+                <Link
+                  to="/signup"
+                  className="fw-bold fs-6 text-danger text-decoration-none ms-2 me-2"
+                >
+                  Sign Up Here
+                </Link>
               </p>
             </div>
 

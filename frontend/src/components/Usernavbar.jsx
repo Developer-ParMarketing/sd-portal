@@ -138,7 +138,7 @@ const Usernavbar = () => {
               to someone being harassed or struggling with their debts and get
               </span>
               <span className="fw-bold">
-                <LiaRupeeSignSolid /> INR 1,000 when they enrol with us. Click here.
+                 INR 1,000 when they enrol with us. Click here.
               </span>
             </p>
           </marquee>
