@@ -93,9 +93,9 @@
 
 //       const uid = user.id;
 //       const response = await axios.put(
-//         `${url}/proxy?url=https://www.zohoapis.in/crm/v2/Leads/${
-//           recordId ? recordId : uid
-//         }`,
+        // `${url}/proxy?url=https://www.zohoapis.in/crm/v2/Leads/${
+        //   recordId ? recordId : uid
+        // }`,
 //         formData,
 //         {
 //           headers: {
@@ -499,22 +499,30 @@ const Proceed = () => {
   };
 
   const handleSubmit = async () => {
-    const formattedData = [
-      {
-        ...formData,
-        Step: 1,
-      },
-    ];
-
+    const formattedData = [{ ...formData, Step: 1 }];
     try {
       const token = await getToken();
       const recordId = localStorage.getItem("recordId");
-      const uid = user.id;
+      const uid = user?.id;
+  
+      const apiRecordId = recordId || uid;
+      if (!apiRecordId) {
+        toast.error("Failed to update data due to missing user ID.");
+        return;
+      }
+  // 532383000160099163
+  //  532383000160060276
+  // 
+  
+  // currect -
+  // 532383000160112883
+  // 532383000160060276
 
+      console.log("Attempting to update record with ID:", apiRecordId);
+      console.log("Attempting to update record with ID:", recordId);
+  
       const response = await axios.put(
-        `${url}/proxy?url=https://www.zohoapis.in/crm/v2/Leads/${
-          recordId ? recordId : uid
-        }`,
+        `${url}/proxy?url=https://www.zohoapis.in/crm/v2/Leads/${apiRecordId}`,
         formattedData,
         {
           headers: {
@@ -523,17 +531,20 @@ const Proceed = () => {
           },
         }
       );
-
+  
       if (response.data.data[0].code === "SUCCESS") {
         toast.success("Data updated successfully!");
         navigate("/income-and-expense");
+      } else {
+        console.error("Update failed:", response.data.data[0].message);
+        toast.error(`Failed to update data: ${response.data.data[0].message}`);
       }
     } catch (error) {
       console.error("Error updating data:", error);
       toast.error("Failed to update data.");
     }
   };
-
+  
   const handleFinalSubmit = () => {
     setIsModalOpen(false);
     handleSubmit();

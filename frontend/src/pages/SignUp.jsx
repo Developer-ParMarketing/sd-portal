@@ -93,7 +93,11 @@ const SignUp = () => {
       localStorage.setItem("crUser", JSON.stringify(inputs.mobile));
       const userData = res.data?.data?.[0];
 
+
       if (userData) {
+
+        const createdId = userData.id;
+        localStorage.setItem("recordId", createdId);
         setMessage("User already exists. Please Login");
 
         toast.info("User data found for the provided mobile number! Do Login", {
@@ -130,6 +134,7 @@ const SignUp = () => {
             },
           }
         );
+console.log(createUserRes);
 
         if (createUserRes.data.data[0].code === "SUCCESS") {
           let countdown = 60;
@@ -199,16 +204,16 @@ const SignUp = () => {
             </p>
           </div>
           <ul className="d-flex align-items-lg-center align-items-start justify-content-start flex-lg-row flex-column terms-list">
-              <li>
-                <Link to="/terms-conditionpage">Terms & Conditions</Link>
-              </li>
-              <li>
-                <Link to="/privacypolicy">Privacy Policy</Link>
-              </li>
-              <li>
-                <Link to="/faq">FAQ</Link>
-              </li>
-            </ul>
+            <li>
+              <Link to="/terms-conditionpage">Terms & Conditions</Link>
+            </li>
+            <li>
+              <Link to="/privacypolicy">Privacy Policy</Link>
+            </li>
+            <li>
+              <Link to="/faq">FAQ</Link>
+            </li>
+          </ul>
         </div>
       </div>
       <div className="right-part">

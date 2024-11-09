@@ -173,6 +173,12 @@ app.get("/proxy", (req, res) => {
     url = urlObj.toString();
   }
 
+  if (userId) {
+    const urlObj = new URL(url);
+    urlObj.searchParams.append("userId", userId);
+    url = urlObj.toString();
+  }
+
   const options = {
     url: url,
     headers: headers,

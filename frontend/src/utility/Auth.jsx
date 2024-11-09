@@ -231,6 +231,11 @@ const Auth = ({ Component }) => {
           },
         }
       );
+console.log(res.data.data[0].id);
+
+
+// 532383000160110350
+// 532383000160110350
 
       if (res.status === 200) {
         const details = res.data.data[0];
