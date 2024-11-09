@@ -69,11 +69,12 @@ const App = () => {
         <Route path="/help" element={<Help />} />
         {/*  */}
         <Route path="/login" element={<Login />} />
-
-
         <Route path="/signup" element={<SignUp />} />
 
-        <Route path="/registrationfflow" element={<Auth Component={RegistrationfFlow} />}/>
+
+
+
+        <Route path="/registrationfflow" element={<RegistrationfFlow />}/>
         <Route path="/proceed" element={<Auth Component={Proceed} />}/>
         <Route path="/income-and-expense" element={<Auth Component={Income} />}/>
         <Route path="/description" element={<Auth Component={Description} />}/>
@@ -81,11 +82,11 @@ const App = () => {
         <Route path="/enroll" element={<Auth Component={ ThankYouPage}/>} />
         <Route path="/offer" element={<Auth Component={ Offer}/>} />
         <Route path="/encouragement" element={<Auth Component={ Encouragement}/>} />
-        {/*  */}
         <Route path="/termsconditions" element={<TermsConditions />} />
         <Route path="/hold" element={<Auth Component={Hold }/>} />
-        <Route path="/faq" element={<FAQ />} />
         <Route path="/privacypolicy" element={<Privacypolicy />} />
+        {/*  */}
+        <Route path="/faq" element={<FAQ />} />
         <Route path="/terms-conditionpage" element={<TermsConditionpage />} />
         <Route path="*" element={<NotFound />} />
 

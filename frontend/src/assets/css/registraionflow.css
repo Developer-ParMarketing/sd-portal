@@ -177,7 +177,7 @@
     }
   
     .card {
-      flex-direction: column;
+      /* flex-direction: column; */
     }
   
     .header {
