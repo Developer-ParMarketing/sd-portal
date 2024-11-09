@@ -170,6 +170,9 @@ const Card = ({ title, emi, fee, oneTimeFee, total, unsecured }) => {
       
     ];
 
+    console.log('this is card userid',user.id);
+    
+
     try {
       const response = await axios.put(
         `${url}/proxy?url=https://www.zohoapis.in/crm/v2/Leads/${
@@ -194,10 +197,12 @@ const Card = ({ title, emi, fee, oneTimeFee, total, unsecured }) => {
 
   const fetchPaymentStatusFromZoho = async (token) => {
     const recordId = localStorage.getItem("recordId");
-    if (!recordId) {
-      console.error("No record ID found.");
-      return null; // Return null if no record ID is found
-    }
+    // if (!recordId) {
+    //   console.error("No record ID found.");
+    //   return null; // Return null if no record ID is found
+    // }
+console.log('this is record id',recordId);
+console.log('this is record id',user.id);
 
     try {
       const response = await fetch(
