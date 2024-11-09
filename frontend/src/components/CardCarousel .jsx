@@ -153,13 +153,21 @@ const Card = ({ title, emi, fee, oneTimeFee, total, unsecured }) => {
     // }
 
     const data = [
+      // {
+      //   Plan_Type: `${title}`,
+      //   Monthly_EMI_Payment: calculatedEMI.toString(), // Ensure it's a string
+      //   Total_Plan_Amount: totalbil.toString(), // Ensure it's a string
+      //   Subscription_Fees: subscription.toString(), // Ensure it's a string
+      //   Step: "3", // As per your requirement
+      // },
       {
         Plan_Type: `${title}`,
-        Monthly_EMI_Payment: calculatedEMI.toString(), // Ensure it's a string
-        Total_Plan_Amount: totalbil.toString(), // Ensure it's a string
-        Subscription_Fees: subscription.toString(), // Ensure it's a string
+        Monthly_EMI_Payment: Math.round(calculatedEMI).toString(), // Round to nearest integer and convert to string
+        Total_Plan_Amount: Math.round(totalbil).toString(), // Round to nearest integer and convert to string
+        Subscription_Fees: Math.round(subscription).toString(), // Round to nearest integer and convert to string
         Step: "3", // As per your requirement
-      },
+      }
+      
     ];
 
     try {
@@ -327,124 +335,123 @@ const Card = ({ title, emi, fee, oneTimeFee, total, unsecured }) => {
         </Link>
       </div> */}
 
-      <div
-        className="card-body text-white d-flex flex-column align-items-center"
-        style={{
-          padding: "1rem",
-          pointerEvents: Math.round(calculatedEMI) < 10000 ? "none" : "auto", // Disable entire card if EMI is less than ₹10,000
-          opacity: Math.round(calculatedEMI) < 10000 ? 0.5 : 1, // Dim the card when disabled
-        }}
-      >
-        <h5
-          className="card-title text-center"
-          style={{
-            fontSize: "1.5rem",
-            fontWeight: "bold",
-            marginBottom: "1rem",
-          }}
-        >
-          {title} Months Plan
-        </h5>
-        <hr className="text-white w-100" style={{ margin: "0.5rem 0" }} />
+<div
+  className="card-body text-white d-flex flex-column align-items-center"
+  style={{
+    padding: "1rem",
+    pointerEvents: Math.round(calculatedEMI) < 10000 ? "none" : "auto",
+    opacity: Math.round(calculatedEMI) < 10000 ? 0.5 : 1,
+  }}
+>
+  <h5
+    className="card-title text-center"
+    style={{
+      fontSize: "clamp(1rem, 2vw, 1.5rem)", // Responsive font size
+      fontWeight: "bold",
+      marginBottom: "1rem",
+    }}
+  >
+    {title} Months Plan
+  </h5>
+  <hr className="text-white w-100" style={{ margin: "0.5rem 0" }} />
 
-        <div
-          className="w-100 d-flex justify-content-between"
-          style={{ fontSize: "1.2rem", margin: "0.5rem 0" }}
-        >
-          <span>Monthly EMI:</span>
-          <strong>{`₹${Math.round(calculatedEMI)}`}</strong>
-        </div>
-        <div
-          className="w-100 d-flex justify-content-between"
-          style={{ fontSize: "1.2rem", margin: "0.5rem 0" }}
-        >
-          <span>Subscription:</span>
-          <strong>₹{Math.round(subscription)}</strong>
-        </div>
-        {oneTimeFee && (
-          <div
-            className="w-100 d-flex justify-content-between"
-            style={{ fontSize: "1.2rem", margin: "0.5rem 0" }}
-          >
-            <span>One Time Fee:</span>
-            <strong>₹{oneTimeFee}</strong>
-          </div>
-        )}
+  <div
+    className="w-100 d-flex justify-content-between"
+    style={{ fontSize: "clamp(0.9rem, 1.8vw, 1.2rem)", margin: "0.5rem 0" }}
+  >
+    <span>Monthly EMI:</span>
+    <strong>{`₹${Math.round(calculatedEMI)}`}</strong>
+  </div>
+  <div
+    className="w-100 d-flex justify-content-between"
+    style={{ fontSize: "clamp(0.9rem, 1.8vw, 1.2rem)", margin: "0.5rem 0" }}
+  >
+    <span>Subscription:</span>
+    <strong>₹{Math.round(subscription)}</strong>
+  </div>
+  {oneTimeFee && (
+    <div
+      className="w-100 d-flex justify-content-between"
+      style={{ fontSize: "clamp(0.9rem, 1.8vw, 1.2rem)", margin: "0.5rem 0" }}
+    >
+      <span>One Time Fee:</span>
+      <strong>₹{oneTimeFee}</strong>
+    </div>
+  )}
 
-        <hr className="text-white w-100" style={{ margin: "0.5rem 0" }} />
+  <hr className="text-white w-100" style={{ margin: "0.5rem 0" }} />
 
-        <div
-          className="w-100 d-flex justify-content-between"
-          style={{ fontSize: "1.2rem", fontWeight: "bold", margin: "0.5rem 0" }}
-        >
-          <span>Total:</span>
-          <strong>₹{Math.round(totalbil)}</strong>
-        </div>
+  <div
+    className="w-100 d-flex justify-content-between"
+    style={{
+      fontSize: "clamp(0.9rem, 1.8vw, 1.2rem)",
+      fontWeight: "bold",
+      margin: "0.5rem 0",
+    }}
+  >
+    <span>Total:</span>
+    <strong>₹{Math.round(totalbil)}</strong>
+  </div>
 
-        <Link
-          to="/offer"
-          state={{ title, emi, fee, oneTimeFee, total, calculatedEMI }}
-          style={{ textDecoration: "none" }}
-        >
-          <button
-            disabled={Math.round(calculatedEMI) < 10000} // Disable if EMI is less than ₹10,000
-            className="btn w-100 mx-auto" // Bootstrap classes for full width and centering
-            style={{
-              background: Math.round(calculatedEMI) < 10000 ? "#fff" : "#ffff", // Change background color when disabled
-              color: Math.round(calculatedEMI) < 10000 ? "#000" : "#ff4865", // Change text color when disabled
-              border:
-                Math.round(calculatedEMI) < 10000 ? "1px solid black" : "none",
+  <Link
+    to="/offer"
+    state={{ title, emi, fee, oneTimeFee, total, calculatedEMI }}
+    style={{ textDecoration: "none" }}
+  >
+    <button
+      disabled={Math.round(calculatedEMI) < 10000}
+      className="btn w-100 mx-auto"
+      style={{
+        background: Math.round(calculatedEMI) < 10000 ? "#fff" : "#ffff",
+        color: Math.round(calculatedEMI) < 10000 ? "#000" : "#ff4865",
+        border: Math.round(calculatedEMI) < 10000 ? "1px solid black" : "none",
+        borderRadius: "5px",
+        padding: "10px 20px",
+        fontSize: "clamp(0.8rem, 2vw, 1rem)", // Responsive font size for button
+        fontWeight: "bolder",
+        cursor: Math.round(calculatedEMI) < 10000 ? "not-allowed" : "pointer",
+        display: "block",
+        transition: "background 0.3s",
+      }}
+      onClick={(e) => {
+        if (Math.round(calculatedEMI) < 10000) {
+          e.preventDefault();
+          alert(
+            "Sorry! Your Outstanding amount is too low. Please select a different plan."
+          );
+        } else {
+          updateZohoCRM();
+        }
+      }}
+      onMouseEnter={(e) => {
+        if (Math.round(calculatedEMI) >= 10000) {
+          e.currentTarget.style.background = "#ff866a";
+          e.currentTarget.style.color = "#fff";
+          e.currentTarget.style.border = "2px solid #fff";
+        }
+      }}
+      onMouseLeave={(e) => {
+        if (Math.round(calculatedEMI) >= 10000) {
+          e.currentTarget.style.background = "#ffff";
+          e.currentTarget.style.color = "#ff4865";
+          e.currentTarget.style.border = "2px solid #ff866a";
+        }
+      }}
+    >
+      {Math.round(calculatedEMI) < 10000 ? (
+        <span style={{  fontWeight: "bold" }}>
+          Sorry! Your Outstanding amount is low. Please contact the
+          Financial Advisor for more details.
+          <br />
+          Call Us - 02268762605
+        </span>
+      ) : (
+        "Select Plan"
+      )}
+    </button>
+  </Link>
+</div>
 
-              borderRadius: "5px",
-              padding: "10px 20px",
-              fontSize: "1rem",
-              fontWeight: "bolder",
-              cursor:
-                Math.round(calculatedEMI) < 10000 ? "not-allowed" : "pointer",
-              display: "block",
-              transition: "background 0.3s", // Smooth transition for hover effect
-            }}
-            onClick={(e) => {
-              if (Math.round(calculatedEMI) < 10000) {
-                e.preventDefault(); // Prevent navigation if EMI is less than ₹10,000
-                alert(
-                  "Sorry! Your Outstanding amount is too low. Please select a different plan."
-                );
-              } else {
-                updateZohoCRM(); // Call the function to update Zoho
-              }
-            }}
-            onMouseEnter={(e) => {
-              if (Math.round(calculatedEMI) >= 10000) {
-                e.currentTarget.style.background = "#ff866a";
-                e.currentTarget.style.color = "#fff";
-                e.currentTarget.style.border = "2px solid #fff";
-              }
-            }} // Lighter color on hover
-            onMouseLeave={(e) => {
-              if (Math.round(calculatedEMI) >= 10000) {
-                e.currentTarget.style.background = "#ffff";
-                e.currentTarget.style.color = "#ff4865";
-                e.currentTarget.style.border = "2px solid #ff866a";
-              }
-            }} // Original color
-          >
-            {Math.round(calculatedEMI) < 10000 ? (
-              <span style={{ fontSize: "0.8rem", fontWeight: "bold" }}>
-                Sorry! Your Outstanding amount is low. Please contact the
-                Financial Advisor for more details.
-                <br />
-                Call Us - 02268762605
-              </span>
-            ) : (
-              "Select Plan"
-            )}
-          </button>
-        </Link>
-
-        {/*  we are unable to proceed with DMP
-     Plan, Kindly Contact to Financial Advisor for More Details. */}
-      </div>
     </div>
   );
 };
