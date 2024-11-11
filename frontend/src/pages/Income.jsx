@@ -532,7 +532,7 @@ const Income = () => {
                     fontWeight: "bold",
                   }}
                 >
-                  Conform
+                  Confirm
                 </button>
 
                 <button

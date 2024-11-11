@@ -248,6 +248,7 @@ console.log(res.data.data[0].id);
       console.error(error);
       setError("Token expired. Please try again after sometime.");
       setLoading(false); // Stop loading on error
+      navigate('/login')
     }
   };
 
