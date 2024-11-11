@@ -604,7 +604,7 @@ const CardCarousel = ({ unsecured }) => {
           className="carousel-control-next-icon"
           style={{
             backgroundColor: "black",
-            marginRight: "-100px",
+            marginRight: "-140px",
           }}
           aria-hidden="true"
         ></span>
