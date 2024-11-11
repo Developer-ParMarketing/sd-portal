@@ -166,12 +166,10 @@ const Card = ({ title, emi, fee, oneTimeFee, total, unsecured }) => {
         Total_Plan_Amount: Math.round(totalbil).toString(), // Round to nearest integer and convert to string
         Subscription_Fees: Math.round(subscription).toString(), // Round to nearest integer and convert to string
         Step: "3", // As per your requirement
-      }
-      
+      },
     ];
 
-    console.log('this is card userid',user.id);
-    
+    console.log("this is card userid", user.id);
 
     try {
       const response = await axios.put(
@@ -195,14 +193,16 @@ const Card = ({ title, emi, fee, oneTimeFee, total, unsecured }) => {
     }
   };
 
+  
+
   const fetchPaymentStatusFromZoho = async (token) => {
     const recordId = localStorage.getItem("recordId");
     // if (!recordId) {
     //   console.error("No record ID found.");
     //   return null; // Return null if no record ID is found
     // }
-console.log('this is record id',recordId);
-console.log('this is record id',user.id);
+    console.log("this is record id", recordId);
+    console.log("this is record id", user.id);
 
     try {
       const response = await fetch(
@@ -340,123 +340,133 @@ console.log('this is record id',user.id);
         </Link>
       </div> */}
 
-<div
-  className="card-body text-white d-flex flex-column align-items-center"
-  style={{
-    padding: "1rem",
-    pointerEvents: Math.round(calculatedEMI) < 10000 ? "none" : "auto",
-    opacity: Math.round(calculatedEMI) < 10000 ? 0.5 : 1,
-  }}
->
-  <h5
-    className="card-title text-center"
-    style={{
-      fontSize: "clamp(1rem, 2vw, 1.5rem)", // Responsive font size
-      fontWeight: "bold",
-      marginBottom: "1rem",
-    }}
-  >
-    {title} Months Plan
-  </h5>
-  <hr className="text-white w-100" style={{ margin: "0.5rem 0" }} />
+      <div
+        className="card-body text-white d-flex flex-column align-items-center"
+        style={{
+          padding: "1rem",
+          pointerEvents: Math.round(calculatedEMI) < 10000 ? "none" : "auto",
+          opacity: Math.round(calculatedEMI) < 10000 ? 0.5 : 1,
+        }}
+      >
+        <h5
+          className="card-title text-center"
+          style={{
+            fontSize: "clamp(1rem, 2vw, 1.5rem)", // Responsive font size
+            fontWeight: "bold",
+            marginBottom: "1rem",
+          }}
+        >
+          {title} Months Plan
+        </h5>
+        <hr className="text-white w-100" style={{ margin: "0.5rem 0" }} />
 
-  <div
-    className="w-100 d-flex justify-content-between"
-    style={{ fontSize: "clamp(0.9rem, 1.8vw, 1.2rem)", margin: "0.5rem 0" }}
-  >
-    <span>Monthly EMI:</span>
-    <strong>{`₹${Math.round(calculatedEMI)}`}</strong>
-  </div>
-  <div
-    className="w-100 d-flex justify-content-between"
-    style={{ fontSize: "clamp(0.9rem, 1.8vw, 1.2rem)", margin: "0.5rem 0" }}
-  >
-    <span>Subscription:</span>
-    <strong>₹{Math.round(subscription)}</strong>
-  </div>
-  {oneTimeFee && (
-    <div
-      className="w-100 d-flex justify-content-between"
-      style={{ fontSize: "clamp(0.9rem, 1.8vw, 1.2rem)", margin: "0.5rem 0" }}
-    >
-      <span>One Time Fee:</span>
-      <strong>₹{oneTimeFee}</strong>
-    </div>
-  )}
+        <div
+          className="w-100 d-flex justify-content-between"
+          style={{
+            fontSize: "clamp(0.9rem, 1.8vw, 1.2rem)",
+            margin: "0.5rem 0",
+          }}
+        >
+          <span>Monthly EMI:</span>
+          <strong>{`₹${Math.round(calculatedEMI)}`}</strong>
+        </div>
+        <div
+          className="w-100 d-flex justify-content-between"
+          style={{
+            fontSize: "clamp(0.9rem, 1.8vw, 1.2rem)",
+            margin: "0.5rem 0",
+          }}
+        >
+          <span>Subscription:</span>
+          <strong>₹{Math.round(subscription)}</strong>
+        </div>
+        {oneTimeFee && (
+          <div
+            className="w-100 d-flex justify-content-between"
+            style={{
+              fontSize: "clamp(0.9rem, 1.8vw, 1.2rem)",
+              margin: "0.5rem 0",
+            }}
+          >
+            <span>One Time Fee:</span>
+            <strong>₹{oneTimeFee}</strong>
+          </div>
+        )}
 
-  <hr className="text-white w-100" style={{ margin: "0.5rem 0" }} />
+        <hr className="text-white w-100" style={{ margin: "0.5rem 0" }} />
 
-  <div
-    className="w-100 d-flex justify-content-between"
-    style={{
-      fontSize: "clamp(0.9rem, 1.8vw, 1.2rem)",
-      fontWeight: "bold",
-      margin: "0.5rem 0",
-    }}
-  >
-    <span>Total:</span>
-    <strong>₹{Math.round(totalbil)}</strong>
-  </div>
+        <div
+          className="w-100 d-flex justify-content-between"
+          style={{
+            fontSize: "clamp(0.9rem, 1.8vw, 1.2rem)",
+            fontWeight: "bold",
+            margin: "0.5rem 0",
+          }}
+        >
+          <span>Total:</span>
+          <strong>₹{Math.round(totalbil)}</strong>
+        </div>
 
-  <Link
-    to="/offer"
-    state={{ title, emi, fee, oneTimeFee, total, calculatedEMI }}
-    style={{ textDecoration: "none" }}
-  >
-    <button
-      disabled={Math.round(calculatedEMI) < 10000}
-      className="btn w-100 mx-auto"
-      style={{
-        background: Math.round(calculatedEMI) < 10000 ? "#fff" : "#ffff",
-        color: Math.round(calculatedEMI) < 10000 ? "#000" : "#ff4865",
-        border: Math.round(calculatedEMI) < 10000 ? "1px solid black" : "none",
-        borderRadius: "5px",
-        padding: "10px 20px",
-        fontSize: "clamp(0.8rem, 2vw, 1rem)", // Responsive font size for button
-        fontWeight: "bolder",
-        cursor: Math.round(calculatedEMI) < 10000 ? "not-allowed" : "pointer",
-        display: "block",
-        transition: "background 0.3s",
-      }}
-      onClick={(e) => {
-        if (Math.round(calculatedEMI) < 10000) {
-          e.preventDefault();
-          alert(
-            "Sorry! Your Outstanding amount is too low. Please select a different plan."
-          );
-        } else {
-          updateZohoCRM();
-        }
-      }}
-      onMouseEnter={(e) => {
-        if (Math.round(calculatedEMI) >= 10000) {
-          e.currentTarget.style.background = "#ff866a";
-          e.currentTarget.style.color = "#fff";
-          e.currentTarget.style.border = "2px solid #fff";
-        }
-      }}
-      onMouseLeave={(e) => {
-        if (Math.round(calculatedEMI) >= 10000) {
-          e.currentTarget.style.background = "#ffff";
-          e.currentTarget.style.color = "#ff4865";
-          e.currentTarget.style.border = "2px solid #ff866a";
-        }
-      }}
-    >
-      {Math.round(calculatedEMI) < 10000 ? (
-        <span style={{  fontWeight: "bold" }}>
-          Sorry! Your Outstanding amount is low. Please contact the
-          Financial Advisor for more details.
-          <br />
-          Call Us - 02268762605
-        </span>
-      ) : (
-        "Select Plan"
-      )}
-    </button>
-  </Link>
-</div>
-
+        <Link
+          to="/offer"
+          state={{ title, emi, fee, oneTimeFee, total, calculatedEMI }}
+          style={{ textDecoration: "none" }}
+        >
+          <button
+            disabled={Math.round(calculatedEMI) < 10000}
+            className="btn w-100 mx-auto"
+            style={{
+              background: Math.round(calculatedEMI) < 10000 ? "#fff" : "#ffff",
+              color: Math.round(calculatedEMI) < 10000 ? "#000" : "#ff4865",
+              border:
+                Math.round(calculatedEMI) < 10000 ? "1px solid black" : "none",
+              borderRadius: "5px",
+              padding: "10px 20px",
+              fontSize: "clamp(0.8rem, 2vw, 1rem)", // Responsive font size for button
+              fontWeight: "bolder",
+              cursor:
+                Math.round(calculatedEMI) < 10000 ? "not-allowed" : "pointer",
+              display: "block",
+              transition: "background 0.3s",
+            }}
+            onClick={(e) => {
+              if (Math.round(calculatedEMI) < 10000) {
+                e.preventDefault();
+                alert(
+                  "Sorry! Your Outstanding amount is too low. Please select a different plan."
+                );
+              } else {
+                updateZohoCRM();
+              }
+            }}
+            onMouseEnter={(e) => {
+              if (Math.round(calculatedEMI) >= 10000) {
+                e.currentTarget.style.background = "#ff866a";
+                e.currentTarget.style.color = "#fff";
+                e.currentTarget.style.border = "2px solid #fff";
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (Math.round(calculatedEMI) >= 10000) {
+                e.currentTarget.style.background = "#ffff";
+                e.currentTarget.style.color = "#ff4865";
+                e.currentTarget.style.border = "2px solid #ff866a";
+              }
+            }}
+          >
+            {Math.round(calculatedEMI) < 10000 ? (
+              <span style={{ fontWeight: "bold" }}>
+                Sorry! Your Outstanding amount is low. Please contact the
+                Financial Advisor for more details.
+                <br />
+                Call Us - 02268762605
+              </span>
+            ) : (
+              "Select Plan"
+            )}
+          </button>
+        </Link>
+      </div>
     </div>
   );
 };
@@ -561,7 +571,7 @@ const CardCarousel = ({ unsecured }) => {
       </div>
       {/* Prev Button */}
       <button
-        className="carousel-control-prev d-none d-md-block" // Hide on mobile
+        className="carousel-control-prev d-md-block" // Hide on mobile
         type="button"
         data-bs-target="#cardCarousel"
         data-bs-slide="prev"
@@ -582,12 +592,11 @@ const CardCarousel = ({ unsecured }) => {
 
       {/* Next Button */}
       <button
-        className="carousel-control-next d-none d-md-block" // Hide on mobile
+        className="carousel-control-next d-md-block" // Hide on mobile
         type="button"
         data-bs-target="#cardCarousel"
         data-bs-slide="next"
         style={{
-          marginRight: "-20px",
           border: "none",
         }}
       >
@@ -605,12 +614,15 @@ const CardCarousel = ({ unsecured }) => {
       {/* Optional: Custom styles for larger screens */}
       <style>
         {`
-          @media (max-width: 768px) {
-            .carousel-control-prev, .carousel-control-next {
-              display: none; /* Hide the controls for mobile view */
-            }
-          }
-        `}
+    @media (max-width: 768px) {
+      .carousel-control-prev-icon {
+        margin-left: 0px !important;
+      }
+      .carousel-control-next-icon {
+        margin-right: 0px !important;
+      }
+    }
+  `}
       </style>
     </div>
   );

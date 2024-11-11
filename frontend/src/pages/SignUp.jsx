@@ -93,9 +93,7 @@ const SignUp = () => {
       localStorage.setItem("crUser", JSON.stringify(inputs.mobile));
       const userData = res.data?.data?.[0];
 
-
       if (userData) {
-
         const createdId = userData.id;
         localStorage.setItem("recordId", createdId);
         setMessage("User already exists. Please Login");
@@ -134,7 +132,7 @@ const SignUp = () => {
             },
           }
         );
-console.log(createUserRes);
+        console.log(createUserRes);
 
         if (createUserRes.data.data[0].code === "SUCCESS") {
           let countdown = 60;
@@ -143,22 +141,32 @@ console.log(createUserRes);
           );
 
           // Start the countdown timer
-          const countdownInterval = setInterval(() => {
-            countdown -= 1;
-            const minutes = Math.floor(countdown / 60);
-            const seconds = countdown % 60;
+          const startCountdown = () => {
+            const countdownInterval = setInterval(() => {
+              countdown -= 1;
+              const minutes = Math.floor(countdown / 60);
+              const seconds = countdown % 60;
+        
+              // Update the message with the formatted countdown
+              setMessage(
+                `User created successfully. Please wait, processing your information... ${minutes}:${seconds
+                  .toString()
+                  .padStart(2, "0")}`
+              );
+        
+              // Check if countdown reached zero
+              if (countdown <= 0) {
+                clearInterval(countdownInterval); // Stop the timer
+                setMessage("Almost done... Please wait a bit longer.");
+        
+                // Reset countdown and start it again
+                countdown = 60;
+                startCountdown(); // Start the timer again
+              }
+            }, 1000);
+          };
 
-            // Update the message with the formatted countdown
-            setMessage(
-              `User created successfully. Please wait, processing your information... ${minutes}:${seconds
-                .toString()
-                .padStart(2, "0")}`
-            );
-
-            if (countdown <= 0) {
-              clearInterval(countdownInterval); // Stop the timer when it reaches 0
-            }
-          }, 1000);
+          startCountdown();
 
           const intervalId = setInterval(async () => {
             const checkRes = await axios.get(
@@ -177,7 +185,7 @@ console.log(createUserRes);
               setLoading(false); // Stop loader
               navigate("/registrationfflow"); // Navigate to the next page
             }
-          }, 20000); // Check every second
+          }, 10000); // Check every second
         } else {
           setMessage("Failed to create user in Zoho CRM.");
           setLoading(false);

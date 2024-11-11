@@ -485,6 +485,19 @@ const Proceed = () => {
     { label: "Court Hearings", value: "court_hearings" },
   ];
 
+
+
+
+  const getHarassmentLabel = (value) => {
+    const option = harassmentOptions.find(option => option.value === value);
+    return option ? option.label : '';
+  };
+  
+  const getLegalActionLabel = (value) => {
+    const option = legalActionOptions.find(option => option.value === value);
+    return option ? option.label : '';
+  };
+  
   const handleNext = (e) => {
     e.preventDefault();
     // Gather form data and open modal
@@ -762,11 +775,12 @@ const Proceed = () => {
                   </p>
                   <p className="d-flex justify-content-between">
                     <strong>Type of harassment:</strong>
-                    <span>{formData.Harassment_Type}</span>
+                    <span>{getHarassmentLabel(formData.Harassment_Type)}</span>
                   </p>
                   <p className="d-flex justify-content-between">
                     <strong>Type of legal action:</strong>
-                    <span>{formData.Legal_Status}</span>
+                    <span>{getLegalActionLabel(formData.Legal_Status)}</span>
+
                   </p>
                   <div className="d-flex justify-content-between mt-4">
                     <button
@@ -784,7 +798,7 @@ const Proceed = () => {
                         fontWeight: "bold",
                       }}
                     >
-                      Conform
+                      Confirm
                     </button>
 
                     <button
